@@ -6,6 +6,7 @@ import RoomRoute from "./routes/RoomRoutes.js";
 import DoctorRoute from "./routes/DoctorRoutes.js";
 import db from "./config/database.js"
 import { defineAssociations } from "./models/DoctorModels.js";
+import { RoomdefineAssociations } from "./models/RoomModels.js";
 
 
 
@@ -31,6 +32,7 @@ db.sync({
     .then(() => {
         console.log("Database connected");
         defineAssociations()
+        RoomdefineAssociations()
         app.listen(PORT, () => {
             console.log(`Server is running on port ${PORT}`);
         });

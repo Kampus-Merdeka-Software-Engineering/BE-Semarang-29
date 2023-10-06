@@ -28,3 +28,7 @@ const Room = db.define("room", {
 export default Room;
 
 
+export const RoomdefineAssociations = async () => {
+    const { default: Patient } = await import('./PatientModels.js');
+    Room.hasOne(Patient, {sourceKey: 'room_id', foreignKey: 'room_id'});
+};

@@ -1,6 +1,8 @@
 import Room from '../models/RoomModels.js';
 import express from 'express';
 import bodyParser from 'body-parser';
+import Patient from '../models/PatientModels.js';
+import Doctor from '../models/DoctorModels.js';
 
 const app = express();
 app.use(bodyParser.json());
@@ -99,4 +101,69 @@ export const getRoomCount = async (req, res) => {
   }
 };
 
+export const checkin = async (req, res) => {
+  try {
+      const room_id = req.query.room_id;
+      console.log(room_id)
+      const room = await Room.findByPk(room_id);
 
+      if (!room) {
+          return res.status(404).json({ error: 'Room not found.' });
+      }
+
+      if (room.isOccupied === false) {
+          await room.update({
+              checkout_date: new Date(),
+              room_id: null,
+              isOccupied: true
+          });
+      } else {
+          return res.status(400).json({ error: 'Room is not available' });
+      }
+
+      const response = {
+          room: room
+      };
+
+      return res.status(200).json(response);
+  } catch (error) {
+      console.error('Error during checkout:', error);
+      return res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
+
+
+export const RoomandPatient = async (req, res) => {
+  try {
+      const room = await Room.findOne({
+          where: {
+              room_id: req.query.room_id
+          },
+          include: [
+            {
+              model: Patient,
+              include: [
+                {
+                  model: Doctor
+                }
+              ]
+            }
+          ]
+      });
+
+      const response = {
+          room: room,
+          patient: room.Patient,
+          doctor: room.Doctor
+      }
+
+      res.status(200).json({
+          response
+      });
+  } catch (error) {
+      console.error('Error getting patient by room_id:', error);
+      res.status(500).json({
+          error: `${error.message}`
+      });
+  }
+}

@@ -19,7 +19,10 @@ export const PatientinRoom = async (req, res) => {
             where: {
                 patient_id: req.query.patient_id
             },
-            include: Doctor, Room
+            include: [
+                {model: Doctor},
+                {model: Room}
+            ]
         });
 
         const response = {
