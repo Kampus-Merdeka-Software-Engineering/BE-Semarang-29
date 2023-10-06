@@ -1,4 +1,4 @@
-import "dotenv";
+import "dotenv/config.js";
 import express from "express";
 import cors from "cors";
 import PatientRoute from "./routes/PatientRoutes.js";
