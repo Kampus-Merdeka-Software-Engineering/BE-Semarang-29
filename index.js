@@ -10,7 +10,7 @@ import { RoomdefineAssociations } from "./models/RoomModels.js";
 
 
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.DATABASE_PORT || 3000;
 const app = express();
 
 app.use(express.json());
@@ -33,7 +33,7 @@ db.sync({
         console.log("Database connected");
         defineAssociations()
         RoomdefineAssociations()
-        app.listen(process.env.DATABASE_PORT, () => {
+        app.listen(process.env.DATABASE_PORT, "0.0.0.0", () => {
             console.log(`Server is running on port ${process.env.DATABASE_PORT}`);
         });
     }).catch((error) => {
