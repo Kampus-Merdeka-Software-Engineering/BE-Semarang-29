@@ -33,8 +33,8 @@ db.sync({
         console.log("Database connected");
         defineAssociations()
         RoomdefineAssociations()
-        app.listen(process.env.DATABASE_PORT, "0.0.0.0", () => {
-            console.log(`Server is running on port ${process.env.DATABASE_PORT}`);
+        app.listen(PORT, "0.0.0.0", () => {
+            console.log(`Server is running on port ${PORT}`);
         });
     }).catch((error) => {
         console.log(`Unable to connect to databse ${error}`)
