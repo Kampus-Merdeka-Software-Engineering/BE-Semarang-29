@@ -93,6 +93,7 @@ export const checkOut = async (req, res) => {
             await patient.update({
                 checkout_date: new Date(),
                 room_id: null,
+                doctor_id: null,
                 status: 'Discharged'
             });
             await patient.room.update({

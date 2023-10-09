@@ -28,60 +28,6 @@ export const getAllDoctor = async (req, res) => {
     }
 }
 
-export const TodayDoctor = async (req, res) => {
-  try {
-    const doctors = await Doctor.findAndCountAll();
-    const date = new Date();
-    const day = date.getDay().toString(); // Convert day to string
-    let daytext = ""
-    switch (day) {
-        case "1":
-            daytext = "monday"
-            break;
-        case "2":
-            daytext = "tuesday"
-            break;
-        case "3":
-            daytext = "wednesday"
-            break;
-        case "4":
-            daytext = "thursday"
-            break;
-        case "5":
-            daytext = "friday"
-            break;
-        default:
-            break;
-    }
-
-    const availdoctors = [];
-    let count = 0;
-    
-    console.log(doctors)
-    if (doctors.rows) {
-        doctors.rows.forEach((doctor) => {
-          const avail = doctor.availability;
-          avail.forEach((availDay) => {
-            if (availDay == daytext) {
-              availdoctors.push(doctor);
-              count ++
-            }
-          });
-        });
-      }
-
-      const response = {
-        avail: availdoctors,
-        count: count
-      }
-
-    res.status(200).json(response);
-  } catch (error) {
-    console.error('Error in TodayDoctor:', error);
-    res.status(500).json({ error: `${error.message}` });
-  }
-};
-
 
 
 export const bulkaddDoctors = async (req, res) => {
