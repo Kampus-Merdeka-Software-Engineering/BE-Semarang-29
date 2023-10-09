@@ -25,6 +25,9 @@ app.use(PatientRoute);
 app.use(RoomRoute);
 app.use(DoctorRoute);
 
+var server = app.listen();
+server.setTimeout(500000);
+
 
 db.sync({
         alter: true
