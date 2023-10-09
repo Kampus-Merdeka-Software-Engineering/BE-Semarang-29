@@ -10,7 +10,7 @@ import { RoomdefineAssociations } from "./models/RoomModels.js";
 
 
 
-const PORT = process.env.DATABASE_PORT || 3000;
+const PORT = process.env.DATABASE_PORT;
 const app = express();
 
 app.use(express.json());
